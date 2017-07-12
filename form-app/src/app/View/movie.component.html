@@ -27,16 +27,9 @@
                             placeholder="Movie Name">
                             <!-- Field Validation-->
                             <div *ngIf="formMovie.controls['name'].errors && (formMovie.controls['name'].dirty || formMovie.controls['name'].touched)" class="alert alert-danger" >
-                            <div [hidden]="!formMovie.controls['name'].hasError('required')">
-                                Name Required
-                            </div>
-                            <!--Alpha Numeric validation -->
-                             <div [hidden]="!formMovie.controls['name'].hasError('pattern')">
-                               Enter Alpha Numeric values only
-                            </div>
-                            <!--Max length validation -->
-                             <div [hidden]="!formMovie.controls['name'].hasError('maxlength')">
-                               Enter Maximum 2 characters
+                            <!--Three Digit validation -->
+                             <div [hidden]="!formMovie.controls['name'].notThreeDigit">
+                               Please enter 3 digit value
                             </div>
                             </div>
                         </div>

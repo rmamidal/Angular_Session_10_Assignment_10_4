@@ -26,13 +26,19 @@ export class MovieComponent {
 
     // Injecting services into constructor. 
     constructor(private _movieService: MovieService, private _ratingService: RatingService, private _formBuilder: FormBuilder) {}
+    
+    //Custom validator function.
+    checkIfDigits(fieldControl: FormControl) {
+        let EMAIL_REGEXP = /'^[0-9]{3}$'/i;
+        return EMAIL_REGEXP.test(fieldControl.value) ? null : { notThreeDigit: true };
+    }
 
     // Initialising  Form Grpup, drop down and movies
     ngOnInit() {
       // Using Form Builder.
       this.formMovie = this._formBuilder.group({
         'imageUrl': ['',Validators.compose([Validators.required, Validators.minLength(15)])],
-        'name': ['',Validators.compose([Validators.pattern('^[a-zA-Z0-9]*$'), Validators.required, Validators.maxLength(2)])],
+        'name': ['', (control) => this.checkIfDigits(control)],
         'description': ['', Validators.compose([Validators.pattern('^[a-zA-Z]*$'), Validators.required])],
         'rating': ['', Validators.compose([Validators.required])]
       });
@@ -40,6 +46,7 @@ export class MovieComponent {
       this.listOfMovies = this._movieService.getMovieList();
       this.movieRatings = this._ratingService.getRatings();
     }
+
 
     // Adding movie to movie list
     addMovie() {
